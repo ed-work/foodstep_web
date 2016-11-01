@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from apps.core.serializers import UserSerilizer
-from .models import Recipe
+from .models import Recipe, Step, Ingredient
 
 
 class RecipeSerializer(serializers.ModelSerializer):
@@ -19,3 +19,16 @@ class RecipeSerializer(serializers.ModelSerializer):
         kwargs = {
             'favorites': {'required': False}
         }
+
+
+class StepSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Step
+        fields = '__all__'
+
+
+class IngredientSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ingredient
+        fields = '__all__'
