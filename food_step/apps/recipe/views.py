@@ -13,8 +13,7 @@ from .permissions import ChildRecipePermission, RecipePermission
 class RecipeViewset(viewsets.ModelViewSet):
     serializer_class = RecipeSerializer
     queryset = Recipe.objects.all()
-    permission_classes = (IsAuthenticated, RecipePermission)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (RecipePermission,)
     authentication_classes = (JSONWebTokenAuthentication,)
 
     def perform_create(self, serializer):

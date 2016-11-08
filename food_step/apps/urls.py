@@ -1,4 +1,6 @@
+from django.conf.urls import url
 from rest_framework_nested import routers
+from rest_framework_jwt.views import obtain_jwt_token
 
 from .core import views as core_views
 from .recipe import views as recipe_views
@@ -14,4 +16,9 @@ recipe_routers.register(r'steps', recipe_views.StepViewset,
 recipe_routers.register(r'ingredients', recipe_views.IngredientViewset,
                         base_name='recipe-ingredients')
 
-urlpatterns = router.urls + recipe_routers.urls
+auth_urls = [
+    # url('^auth$', 'rest_framework_jwt.views.obtain_jwt_token', name='auth'),
+    url(r'^auth$', obtain_jwt_token, name='auth'),
+]
+
+urlpatterns = router.urls + recipe_routers.urls + auth_urls
