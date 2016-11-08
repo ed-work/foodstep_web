@@ -17,7 +17,8 @@ class RecipeSerializer(serializers.ModelSerializer):
         model = Recipe
         fields = '__all__'
         kwargs = {
-            'favorites': {'required': False}
+            'favorites': {'required': False},
+            'user': {'reqired': False}
         }
 
 
