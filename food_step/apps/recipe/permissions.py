@@ -12,11 +12,13 @@ class LoginRequiredPermission(object):
 class RecipePermission(LoginRequiredPermission, permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
-        return request.user == obj.user
+        return True if request.method in permissions.SAFE_METHODS else\
+            request.user == obj.user
 
 
 class ChildRecipePermission(LoginRequiredPermission,
                             permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
-        return request.user == obj.recipe.user
+        return True if request.method in permissions.SAFE_METHODS else\
+            request.user == obj.recipe.user

@@ -12,7 +12,7 @@ from .permissions import ChildRecipePermission, RecipePermission
 
 class RecipeViewset(viewsets.ModelViewSet):
     serializer_class = RecipeSerializer
-    queryset = Recipe.objects.all()
+    queryset = Recipe.objects.select_related('user')
     permission_classes = (RecipePermission,)
     authentication_classes = (JSONWebTokenAuthentication,)
 
@@ -35,7 +35,7 @@ class RecipeViewset(viewsets.ModelViewSet):
 
 class StepViewset(viewsets.ModelViewSet):
     serializer_class = StepSerializer
-    permission_classes = (IsAuthenticated, ChildRecipePermission)
+    permission_classes = (ChildRecipePermission,)
     authentication_classes = (JSONWebTokenAuthentication,)
 
     def get_queryset(self):
@@ -49,7 +49,7 @@ class StepViewset(viewsets.ModelViewSet):
 
 class IngredientViewset(viewsets.ModelViewSet):
     serializer_class = IngredientSerializer
-    permission_classes = (IsAuthenticated, ChildRecipePermission)
+    permission_classes = (ChildRecipePermission,)
     authentication_classes = (JSONWebTokenAuthentication,)
 
     def get_queryset(self):

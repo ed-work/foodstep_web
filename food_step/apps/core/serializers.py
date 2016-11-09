@@ -25,8 +25,7 @@ class DynamicFieldsSerializer(object):
              field in remove_fields]
 
 
-class UserSerilizer(serializers.HyperlinkedModelSerializer):
-    url = serializers.HyperlinkedIdentityField(view_name='api:user-detail')
+class UserSerilizer(serializers.ModelSerializer):
 
     class Meta:
         model = User
