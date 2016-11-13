@@ -6,12 +6,14 @@ from .models import Recipe, Step, Ingredient
 
 class RecipeSerializer(serializers.ModelSerializer):
     user = UserSerilizer()
-    favorites = serializers.HyperlinkedIdentityField(
-        view_name='api:user-detail', read_only=True, many=True)
+    favorites = serializers.SerializerMethodField()
     favorited = serializers.SerializerMethodField()
 
     def get_favorited(self, obj):
         return obj.is_favorited(self.context.get('request').user)
+
+    def get_favorites(self, obj):
+        return obj.favorites.count()
 
     class Meta:
         model = Recipe

@@ -1,3 +1,11 @@
+<<<<<<< HEAD
 __pycache__
 media/
 *.sublime*
+=======
+.DS_Store
+node_modules/
+dist/
+npm-debug.log
+test/unit/coverage
+>>>>>>> 56a3c6c2a204df65547a231151520ea10880441a
