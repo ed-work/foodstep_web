@@ -12,18 +12,34 @@ export DJANGO_SETTINGS_MODULE="config.settings.openshift"
 
 # gunicorn config
 
-GUNICORN_BIN="python3.5 ${OPENSHIFT_REPO_DIR}food_step/manage.py run_gunicorn"
+# GUNICORN_BIN="python3.5 ${OPENSHIFT_REPO_DIR}food_step/manage.py run_gunicorn"
+# WORKERS=3
+# LOGFILE=${OPENSHIFT_DIY_LOG_DIR}gunicorn_out.log
+# ACCESS_LOGFILE=${OPENSHIFT_DIY_LOG_DIR}gunicorn_access.log
+# PIDFILE=${OPENSHIFT_DATA_DIR}gunicorn.pid
+
+# # Execute gunicorn daemon
+
+# $GUNICORN_BIN $OPENSHIFT_DIY_IP:$OPENSHIFT_DIY_PORT \
+#     --daemon \
+#     --workers=$WORKERS \
+#     --pid=$PIDFILE \
+#     --log-file=$LOGFILE \
+#     --access-logfile $ACCESS_LOGFILE \
+#     --log-level=info
 WORKERS=3
 LOGFILE=${OPENSHIFT_DIY_LOG_DIR}gunicorn_out.log
 ACCESS_LOGFILE=${OPENSHIFT_DIY_LOG_DIR}gunicorn_access.log
 PIDFILE=${OPENSHIFT_DATA_DIR}gunicorn.pid
+CHDIR=${OPENSHIFT_REPO_DIR}food_step
 
-# Execute gunicorn daemon
-
-$GUNICORN_BIN $OPENSHIFT_DIY_IP:$OPENSHIFT_DIY_PORT \
-    --daemon \
-    --workers=$WORKERS \
-    --pid=$PIDFILE \
-    --log-file=$LOGFILE \
+gunicorn \
+    --env DJANGO_SETTINGS_MODULE=config.settings.local \
+    config.wsgi:application \
+    --chdir $CHDIR \
+    -w $WORKERS \
+    -b $OPENSHIFT_DIY_IP:$OPENSHIFT_DIY_PORT \
+    -p $PIDFILE \
+    --log-level info \
     --access-logfile $ACCESS_LOGFILE \
-    --log-level=info
+    --log-file $LOGFILE
