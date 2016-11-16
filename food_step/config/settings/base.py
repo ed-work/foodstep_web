@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_extensions',
     'taggit',
+    'gunicorn',
     'apps.core',
     'apps.recipe'
 ]
