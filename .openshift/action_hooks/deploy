@@ -1,0 +1,7 @@
+#!/bin/bash
+
+echo "Executing 'python $OPENSHIFT_REPO_DIR/food_step/manage.py migrate --noinput'"
+python "$OPENSHIFT_REPO_DIR"/food_step/manage.py migrate --noinput
+
+echo "Executing 'python $OPENSHIFT_REPO_DIR/food_step/manage.py collectstatic --noinput'"
+python "$OPENSHIFT_REPO_DIR"/food_step/manage.py collectstatic --noinput
