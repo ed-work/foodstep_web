@@ -34,7 +34,7 @@ PIDFILE=${OPENSHIFT_DATA_DIR}gunicorn.pid
 CHDIR=${OPENSHIFT_REPO_DIR}food_step
 
 gunicorn \
-    --env DJANGO_SETTINGS_MODULE=config.settings.local \
+    --env DJANGO_SETTINGS_MODULE=config.settings.openshift \
     config.wsgi:application \
     --chdir $CHDIR \
     -w $WORKERS \
