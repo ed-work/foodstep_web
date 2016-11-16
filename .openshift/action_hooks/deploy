@@ -36,16 +36,16 @@ else
 	source ${VENV_APP_DIR}/bin/activate
 	# install dependencies
 	export PIP_DOWNLOAD_CACHE=${OPENSHIFT_TMP_DIR}.pip/cache
-	pip install --log=${OPENSHIFT_TMP_DIR}.pip/pip.log -r ${OPENSHIFT_REPO_DIR}requirements.txt
+	pip3.5 install --log=${OPENSHIFT_TMP_DIR}.pip/pip.log -r ${OPENSHIFT_REPO_DIR}requirements.txt
 fi
 
 export DJANGO_SETTINGS_MODULE="config.settings.openshift"
 
-echo "Executing 'python $OPENSHIFT_REPO_DIR/food_step/manage.py migrate --noinput'"
-python "$OPENSHIFT_REPO_DIR"food_step/manage.py migrate --noinput
+echo "Executing 'python3.5 $OPENSHIFT_REPO_DIR/food_step/manage.py migrate --noinput'"
+python3.5 "$OPENSHIFT_REPO_DIR"food_step/manage.py migrate --noinput
 
-echo "Executing 'python $OPENSHIFT_REPO_DIR/food_step/manage.py collectstatic --noinput'"
-python "$OPENSHIFT_REPO_DIR"food_step/manage.py collectstatic --noinput
+echo "Executing 'python3.5 $OPENSHIFT_REPO_DIR/food_step/manage.py collectstatic --noinput'"
+python3.5 "$OPENSHIFT_REPO_DIR"food_step/manage.py collectstatic --noinput
 
 # prepare Django asset support
 # mkdir -p ${OPENSHIFT_DATA_DIR}media/
