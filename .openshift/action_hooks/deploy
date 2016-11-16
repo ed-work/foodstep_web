@@ -42,10 +42,10 @@ fi
 export DJANGO_SETTINGS_MODULE="config.settings.openshift"
 
 echo "Executing 'python $OPENSHIFT_REPO_DIR/food_step/manage.py migrate --noinput'"
-python "$OPENSHIFT_REPO_DIR"/food_step/manage.py migrate --noinput
+python "$OPENSHIFT_REPO_DIR"food_step/manage.py migrate --noinput
 
 echo "Executing 'python $OPENSHIFT_REPO_DIR/food_step/manage.py collectstatic --noinput'"
-python "$OPENSHIFT_REPO_DIR"/food_step/manage.py collectstatic --noinput
+python "$OPENSHIFT_REPO_DIR"food_step/manage.py collectstatic --noinput
 
 # prepare Django asset support
 # mkdir -p ${OPENSHIFT_DATA_DIR}media/
