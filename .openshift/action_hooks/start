@@ -17,6 +17,9 @@ export DJANGO_SETTINGS_MODULE="config.settings.openshift"
 # LOGFILE=${OPENSHIFT_DIY_LOG_DIR}gunicorn_out.log
 # ACCESS_LOGFILE=${OPENSHIFT_DIY_LOG_DIR}gunicorn_access.log
 # PIDFILE=${OPENSHIFT_DATA_DIR}gunicorn.pid
+LOGFILE=${OPENSHIFT_DIY_LOG_DIR}uwsgi_out.log
+ACCESS_LOGFILE=${OPENSHIFT_DIY_LOG_DIR}uwsgi_access.log
+PIDFILE=${OPENSHIFT_DATA_DIR}uwsgi.pid
 
 # # Execute gunicorn daemon
 
@@ -27,19 +30,26 @@ export DJANGO_SETTINGS_MODULE="config.settings.openshift"
 #     --log-file=$LOGFILE \
 #     --access-logfile $ACCESS_LOGFILE \
 #     --log-level=info
-WORKERS=3
-LOGFILE=${OPENSHIFT_DIY_LOG_DIR}gunicorn_out.log
-ACCESS_LOGFILE=${OPENSHIFT_DIY_LOG_DIR}gunicorn_access.log
-PIDFILE=${OPENSHIFT_DATA_DIR}gunicorn.pid
-CHDIR=${OPENSHIFT_REPO_DIR}food_step
+# WORKERS=3
+# LOGFILE=${OPENSHIFT_DIY_LOG_DIR}gunicorn_out.log
+# ACCESS_LOGFILE=${OPENSHIFT_DIY_LOG_DIR}gunicorn_access.log
+# PIDFILE=${OPENSHIFT_DATA_DIR}gunicorn.pid
+# CHDIR=${OPENSHIFT_REPO_DIR}food_step
 
-gunicorn \
+# gunicorn \
+#     --env DJANGO_SETTINGS_MODULE=config.settings.openshift \
+#     wsgi:application \
+#     --chdir $CHDIR \
+#     -w $WORKERS \
+#     -b $OPENSHIFT_DIY_IP:$OPENSHIFT_DIY_PORT \
+#     -p $PIDFILE \
+#     --log-level info \
+#     --access-logfile $ACCESS_LOGFILE \
+#     --log-file $LOGFILE
+
+uwsgi --chdir=$CHDIR \
+    --module=config.wsgi:application \
     --env DJANGO_SETTINGS_MODULE=config.settings.openshift \
-    wsgi:application \
-    --chdir $CHDIR \
-    -w $WORKERS \
-    -b $OPENSHIFT_DIY_IP:$OPENSHIFT_DIY_PORT \
-    -p $PIDFILE \
-    --log-level info \
-    --access-logfile $ACCESS_LOGFILE \
-    --log-file $LOGFILE
+    --master --pidfile=$PIDFILE \
+    --socket=$OPENSHIFT_DIY_IP:$OPENSHIFT_DIY_PORT \      # can also be a file --processes=5 \                 # number of worker processes --uid=1000 --gid=2000 \         # if root, uwsgi can drop privileges --harakiri=20 \                 # respawn processes taking more than 20 seconds --max-requests=5000 \           # respawn processes after serving 5000 requests --vacuum \                      # clear environment on exit --home=/path/to/virtual/env \   # optional path to a virtualenv
+    --daemonize=$LOGFILE      # background the process
