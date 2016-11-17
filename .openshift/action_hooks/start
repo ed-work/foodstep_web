@@ -35,7 +35,7 @@ CHDIR=${OPENSHIFT_REPO_DIR}food_step
 
 gunicorn \
     --env DJANGO_SETTINGS_MODULE=config.settings.openshift \
-    config.wsgi:application \
+    wsgi:application \
     --chdir $CHDIR \
     -w $WORKERS \
     -b $OPENSHIFT_DIY_IP:$OPENSHIFT_DIY_PORT \
