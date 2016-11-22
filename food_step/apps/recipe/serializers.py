@@ -5,7 +5,7 @@ from .models import Recipe, Step, Ingredient
 
 
 class RecipeSerializer(serializers.ModelSerializer):
-    user = UserSerilizer()
+    # user = UserSerilizer(required=False)
     favorites = serializers.SerializerMethodField()
     favorited = serializers.SerializerMethodField()
 
@@ -18,9 +18,9 @@ class RecipeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Recipe
         fields = '__all__'
-        kwargs = {
+        extra_kwargs = {
             'favorites': {'required': False},
-            'user': {'reqired': False}
+            'user': {'required': False}
         }
 
 
@@ -32,6 +32,7 @@ class StepSerializer(serializers.ModelSerializer):
 
 
 class IngredientSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Ingredient
         fields = '__all__'

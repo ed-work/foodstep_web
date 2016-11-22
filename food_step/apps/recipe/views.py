@@ -17,9 +17,7 @@ class RecipeViewset(viewsets.ModelViewSet):
     authentication_classes = (JSONWebTokenAuthentication,)
 
     def perform_create(self, serializer):
-        s = serializer.save(commit=False)
-        s.user = self.request.user
-        s.save()
+        serializer.save(user=self.request.user)
 
     @list_route(methods=['get', 'post'], permission_classes=[IsAuthenticated])
     def favorites(self, request, *args, **kwargs):
@@ -42,9 +40,7 @@ class StepViewset(viewsets.ModelViewSet):
         return Step.objects.filter(recipe_id=self.kwargs.get('recipe_pk'))
 
     def perform_create(self, serializer):
-        s = serializer.save(commit=False)
-        s.recipe_id = self.kwargs.get('recipe_pk')
-        s.save()
+        serializer.save(recipe_id=self.kwargs.get('recipe_pk'))
 
 
 class IngredientViewset(viewsets.ModelViewSet):
@@ -57,6 +53,4 @@ class IngredientViewset(viewsets.ModelViewSet):
             recipe_id=self.kwargs.get('recipe_pk'))
 
     def perform_create(self, serializer):
-        s = serializer.save(commit=False)
-        s.recipe_id = self.kwargs.get('recipe_pk')
-        s.save()
+        serializer.save(recipe_id=self.kwargs.get('recipe_pk'))
