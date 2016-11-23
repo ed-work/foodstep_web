@@ -5,7 +5,7 @@ from .models import Recipe, Step, Ingredient
 
 
 class RecipeSerializer(serializers.ModelSerializer):
-    # user = UserSerilizer(required=False)
+    user = UserSerilizer(required=False)
     favorites = serializers.SerializerMethodField()
     favorited = serializers.SerializerMethodField()
 
